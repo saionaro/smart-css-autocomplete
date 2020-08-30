@@ -30,6 +30,12 @@ const getItems = (): CompletionItem[] => {
 
     item.sortText = toAlphabetic(i + 1);
 
+    const usageCount = usageMap[property] ?? 0;
+
+    if (usageCount) {
+      item.detail = `Usage: ${usageCount} times`;
+    }
+
     item.command = {
       title: COMMANDS.SELECTED.TITLE,
       command: COMMANDS.SELECTED.CMD,
