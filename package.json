@@ -19,7 +19,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint --ext .ts src",
     "format": "prettier --write"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "@arkweid/lefthook": "^0.7.2",
     "@types/node": "^12.12.0",
     "@types/vscode": "1.43.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^2.3.0",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.11.0",

@@ -1,44 +1,22 @@
-import * as path from "path";
-// import { workspace, ExtensionContext } from "vscode";
 import { all } from "known-css-properties";
 import {
   workspace,
-  window,
   languages,
   commands,
-  Uri,
-  MarkdownString,
-  RelativePattern,
-  Command,
   CompletionItem,
   ExtensionContext,
   CompletionItemKind,
   Position,
   Range,
-  Hover,
+  CompletionItemProvider,
+  DocumentSelector,
 } from "vscode";
 
 const COMMANDS = {
   SELECTED: "vs-smart-css-autocomplete.selected",
 };
 
-// import {
-//   LanguageClient,
-//   LanguageClientOptions,
-//   ServerOptions,
-//   TransportKind,
-//   // CompletionItemKind
-// } from "vscode-languageclient";
-
-let config = workspace.getConfiguration("vs-smart-css-autocomplete");
-
-// let providerScope = config.get("autocompletionFilesScope");
-let files = {};
-let watchers = [];
-let providers = [];
-let isActiveRestoreAllConfigs = false;
-
-// let client: LanguageClient;
+const providers = [];
 
 const getItems = () => {
   return all.map((property, i) => {
@@ -57,18 +35,16 @@ const getItems = () => {
   });
 };
 
-export function activate(context: ExtensionContext) {
+export function activate(context: ExtensionContext): void {
   registerCommands(context);
   registerProviders();
 }
 
 function registerProviders() {
-  const languageFilter = {
+  registerItemProvider({
     scheme: "file",
     pattern: "**/*.{css,scss,less,sass,styl}",
-  };
-
-  registerItemProvider(languageFilter);
+  });
 }
 
 const handleSelect = (commandSelected: string) => {
@@ -81,18 +57,9 @@ function registerCommands(context: ExtensionContext) {
   );
 }
 
-function registerItemProvider(languageFilter) {
-  const providerFunction = {
-    // resolveCompletionItem: () => {}
-    provideCompletionItems: (document, position, token, context) => {
-      const range1 = new Range(
-        new Position(Math.max(position.line - 15, 0), 0),
-        new Position(position.line + 15, 0)
-      );
-      const lineText2 = document.getText(range1);
-
-      console.log(lineText2);
-
+function registerItemProvider(languageFilter: DocumentSelector) {
+  const providerFunction: CompletionItemProvider = {
+    provideCompletionItems: (document, position) => {
       const range = new Range(new Position(position.line, 0), position);
       const lineText = document.getText(range);
 
