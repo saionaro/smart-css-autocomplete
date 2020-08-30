@@ -1,6 +1,5 @@
 import { all } from "known-css-properties";
 import {
-  workspace,
   languages,
   commands,
   CompletionItem,
