@@ -25,6 +25,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src", "test", "types"],
-  "files": ["./types/*.d.ts"],
   "exclude": ["node_modules", ".vscode-test"]
 }
