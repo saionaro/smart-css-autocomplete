@@ -6,21 +6,33 @@ import {
   Position,
   Range,
   CompletionItemProvider,
-  DocumentSelector,
+  ExtensionContext,
 } from "vscode";
 
-import { FILES_GLOB, SCHEME, COMMANDS } from "./constants";
+import { COMMANDS, SELECTOR } from "./constants";
+import { getStore, toAlphabetic } from "./utils";
 
-const getItems = () => {
-  return allCssProps.map((property, i) => {
+let context: ExtensionContext;
+const listCopy = [...allCssProps];
+
+const getItems = (): CompletionItem[] => {
+  const usageMap = getStore(context);
+
+  listCopy.sort((a, b) => {
+    const valA = usageMap[a] ?? 0;
+    const valB = usageMap[b] ?? 0;
+
+    return valB - valA;
+  });
+
+  return listCopy.map((property, i) => {
     const item = new CompletionItem(property, CompletionItemKind.Field);
 
-    item.sortText = `${i}`;
-    item.preselect = i === 0;
+    item.sortText = toAlphabetic(i + 1);
 
     item.command = {
-      title: "selected-notification",
-      command: COMMANDS.SELECTED,
+      title: COMMANDS.SELECTED.TITLE,
+      command: COMMANDS.SELECTED.CMD,
       arguments: [property],
     };
 
@@ -39,13 +51,8 @@ const providerFunction: CompletionItemProvider = {
   },
 };
 
-const registerItemProvider = (languageFilter: DocumentSelector): void => {
-  languages.registerCompletionItemProvider(languageFilter, providerFunction);
-};
+export const registerProvider = (ctx: ExtensionContext): void => {
+  context = ctx;
 
-export const registerProvider = (): void => {
-  registerItemProvider({
-    scheme: SCHEME,
-    pattern: FILES_GLOB,
-  });
+  languages.registerCompletionItemProvider(SELECTOR, providerFunction);
 };

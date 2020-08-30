@@ -1,13 +1,24 @@
 import { commands, ExtensionContext } from "vscode";
 
-import { COMMANDS } from "./constants";
+import { COMMANDS, STORAGE_KEYS } from "./constants";
+import { getStore } from "./utils";
 
-const handleSelect = (commandSelected: string) => {
-  console.log(`Hello <${commandSelected}>`);
+let context: ExtensionContext;
+
+const handleSelect = (cmd: string) => {
+  const store = getStore(context, true);
+
+  if (!store[cmd]) store[cmd] = 0;
+
+  store[cmd]++;
+
+  context.globalState.update(STORAGE_KEYS.USAGE_MAP, store);
 };
 
-export const registerCommand = (context: ExtensionContext): void => {
+export const registerCommand = (ctx: ExtensionContext): void => {
+  context = ctx;
+
   context.subscriptions.push(
-    commands.registerCommand(COMMANDS.SELECTED, handleSelect)
+    commands.registerCommand(COMMANDS.SELECTED.CMD, handleSelect)
   );
 };
