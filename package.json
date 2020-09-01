@@ -18,6 +18,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -b",
+    "typecheck": "tsc --noEmit",
     "watch": "tsc -b -w",
     "lint": "eslint --ext .ts src",
     "format": "prettier --write"

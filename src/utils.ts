@@ -1,9 +1,8 @@
 import { ExtensionContext } from "vscode";
 
-import { STORAGE_KEYS } from "./constants";
-import { convertToTitle } from "./to-excel-title";
+import { STORAGE_KEYS, FIRST_LETTER } from "./constants";
 
-export const toAlphabetic = (num: number): string => convertToTitle(num);
+export const toAlphabetic = (num: number): string => FIRST_LETTER.repeat(num); // TODO: replace with a little smarter approach
 
 export const getStore = (
   context: ExtensionContext,

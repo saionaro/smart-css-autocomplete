@@ -5,6 +5,10 @@ pre-commit:
       glob: "src/*.{ts}"
       run: npm run lint {staged_files} --fix && git add {staged_files}
 
+    lint:
+      glob: "src/*.{ts}"
+      run: npm run typecheck
+
     format:
       files: git diff --name-only HEAD @{push}
       glob: "*.{ts}"
