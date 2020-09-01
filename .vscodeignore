@@ -2,11 +2,11 @@
 **/*.ts
 **/*.map
 .gitignore
-**/tsconfig.json
-**/tsconfig.base.json
+tsconfig.json
+package-lock.json
 contributing.md
-.travis.yml
+lefthook.yml
+types/**
+src/
 node_modules/**
-!node_modules/vscode-jsonrpc/**
-!node_modules/vscode-languageclient/**
-!node_modules/semver/**
+!node_modules/known-css-properties/**
