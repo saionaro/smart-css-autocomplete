@@ -1,10 +1,26 @@
 {
-  "name": "vs-smart-css-autocomplete",
+  "name": "smart-css-autocomplete",
+  "displayName": "Smart CSS Autocomplete",
+  "description": "Autocomplete CSS properties smarter - using an usage statistics instead of standard random",
   "license": "MIT",
   "version": "1.0.0",
   "categories": [],
+  "author": "Saionaro <shibakow@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Saionaro/smart-css-autocomplete.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Saionaro/smart-css-autocomplete/issues"
+  },
   "keywords": [
-    "multi-root ready"
+    "autocomplete",
+    "suggestions",
+    "css",
+    "less",
+    "scss",
+    "props",
+    "properties"
   ],
   "engines": {
     "vscode": "^1.43.0"
