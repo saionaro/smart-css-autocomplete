@@ -4,7 +4,9 @@
   "description": "Autocomplete CSS properties smarter - using an usage statistics instead of standard random",
   "license": "MIT",
   "version": "1.1.0",
-  "categories": [],
+  "categories": [
+    "Programming Languages"
+  ],
   "author": "Saionaro <shibakow@gmail.com>",
   "publisher": "saionaro",
   "repository": {
@@ -14,6 +16,7 @@
   "bugs": {
     "url": "https://github.com/Saionaro/smart-css-autocomplete/issues"
   },
+  "icon": "icon.png",
   "keywords": [
     "autocomplete",
     "suggestions",
