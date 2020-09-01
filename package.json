@@ -6,6 +6,7 @@
   "version": "1.0.0",
   "categories": [],
   "author": "Saionaro <shibakow@gmail.com>",
+  "publisher": "saionaro",
   "repository": {
     "type": "git",
     "url": "https://github.com/Saionaro/smart-css-autocomplete.git"
