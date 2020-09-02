@@ -1,14 +1,9 @@
 # Smart CSS Autocomplete ![CI](https://github.com/Saionaro/smart-css-autocomplete/workflows/CI/badge.svg)
 
-<div align="center">
-  <br />
-  <img src="https://raw.githubusercontent.com/Saionaro/smart-css-autocomplete/feat/image/icon.png" alt="SCA Logo" />
-</div>
-
 Autocomplements the CSS properties smarter. We collect local statistics on the use of CSS properties for smart sorting hints.
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Saionaro/smart-css-autocomplete/feat/image/images/example.png" alt="Usage Example" />
+  <img src="https://raw.githubusercontent.com/Saionaro/smart-css-autocomplete/master/images/example.png" alt="Usage Example" />
 </div>
 
 ## Attention
