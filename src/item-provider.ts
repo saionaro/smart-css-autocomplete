@@ -7,6 +7,7 @@ import {
   Range,
   CompletionItemProvider,
   ExtensionContext,
+  SnippetString,
 } from "vscode";
 
 import { COMMANDS, SELECTOR } from "./constants";
@@ -42,6 +43,8 @@ const getItems = (prefix: string): CompletionItem[] => {
       command: COMMANDS.SELECTED.CMD,
       arguments: [property],
     };
+
+    item.insertText = new SnippetString(`${property}: $0;`);
 
     return item;
   });
