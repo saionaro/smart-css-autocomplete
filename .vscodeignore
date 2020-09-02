@@ -9,4 +9,5 @@ lefthook.yml
 types/**
 src/
 node_modules/**
+.github/**
 !node_modules/known-css-properties/**

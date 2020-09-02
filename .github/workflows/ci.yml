@@ -1,0 +1,51 @@
+name: CI
+
+on: [push]
+
+jobs:
+  checking:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the Repository
+        uses: actions/checkout@v1
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: Install Deps
+        run: npm ci
+
+      - name: Run Linters
+        run: npm run lint
+
+      - name: Run Types Checking
+        run: npm run typecheck
+
+  release:
+    needs: checking
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout the Repository
+        uses: actions/checkout@v1
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: Install Deps
+        run: npm ci
+
+      - name: Run Compile
+        run: npm run compile
+
+      - name: Disable Lefthook
+        run: echo "::set-env name=LEFTHOOK::0"
+
+      - name: Release
+        run: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

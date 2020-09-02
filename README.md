@@ -2,6 +2,11 @@
 
 Autocomplete CSS properties smarter - using an usage statistics instead of standard random. SCA just gather you CSS props usage statistics to sort props on the right order.
 
+## Attention
+
+For better experience we suggest to switch VS Code parameter `Text Editor` - `Suggest Selection` to 'first' option.
+In that case SCA will preselect the most used CSS property automatically.
+
 ## Installation
 
 Install through VS Code extensions. Search for `smart-css-autocomplete`
