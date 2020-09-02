@@ -11,5 +11,6 @@ module.exports = {
     ],
     "@semantic-release/github",
     "@semantic-release/git",
+    "semantic-release-vsce",
   ],
 };
