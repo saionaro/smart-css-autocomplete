@@ -2,6 +2,10 @@
 
 Autocomplements the CSS properties smarter. We collect local statistics on the use of CSS properties for smart sorting hints.
 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Saionaro/smart-css-autocomplete/master/images/example.png" alt="Usage Example" />
+</div>
+
 ## Attention
 
 For better experience we strongly suggest to switch VS Code parameter `Text Editor` - `Suggest Selection` to `first` option.
