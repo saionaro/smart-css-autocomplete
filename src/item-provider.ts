@@ -10,15 +10,20 @@ import {
   SnippetString,
 } from "vscode";
 
-import { COMMANDS, SELECTOR } from "./constants";
-import { getStore, toAlphabetic, hasColon } from "./utils";
+import { COMMANDS, SELECTOR, COLON } from "./constants";
+import { getStore, toAlphabetic, getColonData } from "./utils";
 
 let context: ExtensionContext;
 
 const getItems = (prefix: string, lineText: string): CompletionItem[] => {
   const usageMap = getStore(context);
 
-  if (hasColon(prefix)) return [];
+  console.log(prefix);
+  console.log(lineText);
+
+  const prefixData = getColonData(prefix);
+
+  if (prefixData.colon || prefixData.semicolon) return [];
 
   const listCopy = allCssProps
     .filter((prop) => prop.startsWith(prefix)) // TODO: deside to use fuzzy search here
@@ -46,10 +51,15 @@ const getItems = (prefix: string, lineText: string): CompletionItem[] => {
       arguments: [property],
     };
 
-    let template = `${property}: $0;`;
+    const lineData = getColonData(lineText);
+    let template = property;
 
-    if (hasColon(lineText)) {
-      template = property;
+    if (!lineData.colon) {
+      template += `${COLON} $0`;
+    }
+
+    if (!lineData.semicolon) {
+      template += ";";
     }
 
     item.insertText = new SnippetString(template);
