@@ -3,7 +3,9 @@
 **/*.map
 .gitignore
 tsconfig.json
+jest.config.js
 package-lock.json
+commitlint.config.js
 contributing.md
 lefthook.yml
 types/**
