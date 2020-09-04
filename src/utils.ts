@@ -1,23 +1,18 @@
 import { ExtensionContext } from "vscode";
 
 import { STORAGE_KEYS, FIRST_LETTER, COLON, SEMICOLON } from "./constants";
+import { UsageMap, IColonData } from "./types";
 
 export const toAlphabetic = (num: number): string => FIRST_LETTER.repeat(num); // TODO: replace with a little smarter approach
 
 export const getStore = (
   context: ExtensionContext,
   isCopy = false
-): Record<string, number> => {
-  const map: Record<string, number> =
-    context.globalState.get(STORAGE_KEYS.USAGE_MAP) ?? {};
+): UsageMap => {
+  const map: UsageMap = context.globalState.get(STORAGE_KEYS.USAGE_MAP) ?? {};
 
   return isCopy ? { ...map } : map;
 };
-
-interface IColonData {
-  colon: boolean;
-  semicolon: boolean;
-}
 
 export const getColonData = (text: string): IColonData => {
   const data = {
