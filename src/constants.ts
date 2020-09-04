@@ -21,3 +21,9 @@ export const COMMANDS = {
 };
 
 export const FIRST_LETTER = "a";
+
+export const COLON = ":";
+
+export const SEMICOLON = ";";
+
+export const CURSOR = "$0";

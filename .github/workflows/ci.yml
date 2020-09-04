@@ -23,6 +23,9 @@ jobs:
       - name: Run Types Checking
         run: npm run typecheck
 
+      - name: Run Tests
+        run: npm run test
+
   release:
     needs: checking
     runs-on: ubuntu-latest

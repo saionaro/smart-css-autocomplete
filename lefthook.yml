@@ -18,3 +18,9 @@ pre-commit:
       files: git diff --name-only HEAD @{push}
       glob: "*.{ts}"
       run: npm run format {staged_files} && git add {staged_files}
+
+pre-push:
+  commands:
+    lint:
+      glob: "src/*.{ts}"
+      run: npm run test
