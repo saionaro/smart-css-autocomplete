@@ -11,12 +11,14 @@ import {
 } from "vscode";
 
 import { COMMANDS, SELECTOR } from "./constants";
-import { getStore, toAlphabetic } from "./utils";
+import { getStore, toAlphabetic, hasColon } from "./utils";
 
 let context: ExtensionContext;
 
-const getItems = (prefix: string): CompletionItem[] => {
+const getItems = (prefix: string, lineText: string): CompletionItem[] => {
   const usageMap = getStore(context);
+
+  if (hasColon(prefix)) return [];
 
   const listCopy = allCssProps
     .filter((prop) => prop.startsWith(prefix)) // TODO: deside to use fuzzy search here
@@ -44,7 +46,13 @@ const getItems = (prefix: string): CompletionItem[] => {
       arguments: [property],
     };
 
-    item.insertText = new SnippetString(`${property}: $0;`);
+    let template = `${property}: $0;`;
+
+    if (hasColon(lineText)) {
+      template = property;
+    }
+
+    item.insertText = new SnippetString(template);
 
     return item;
   });
@@ -52,12 +60,12 @@ const getItems = (prefix: string): CompletionItem[] => {
 
 const providerFunction: CompletionItemProvider = {
   provideCompletionItems: (document, position) => {
-    const range = new Range(new Position(position.line, 0), position);
+    const lineStart = new Position(position.line, 0);
+    const range = new Range(lineStart, lineStart.translate(0, 100));
     const lineText = document.getText(range);
+    const prefix = lineText.slice(0, position.character);
 
-    if (/:/.test(lineText)) return [];
-
-    return getItems(lineText.trim());
+    return getItems(prefix.trim(), lineText.trim());
   },
 };
 

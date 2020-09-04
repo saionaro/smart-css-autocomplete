@@ -31,4 +31,4 @@ ext install saionaro.smart-css-autocomplete
 - Switch to the Debug viewlet.
 - Select `Launch Client` from the drop down.
 - Run the launch config.
-- In the [Extension Development Host] instance of VSCode, open a document in 'CSS' language mode.
+- In the [Extension Development Host] instance of VSCode, open a document in `CSS` language mode.

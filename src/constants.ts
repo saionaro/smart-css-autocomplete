@@ -21,3 +21,5 @@ export const COMMANDS = {
 };
 
 export const FIRST_LETTER = "a";
+
+export const COLON = ";";
