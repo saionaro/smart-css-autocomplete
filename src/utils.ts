@@ -14,6 +14,8 @@ export const getStore = (
   return isCopy ? { ...map } : map;
 };
 
+export const longEnough = (prop: string): boolean => prop.length > 1;
+
 export const getColonData = (text: string): IColonData => {
   const data = {
     colon: false,

@@ -7,7 +7,7 @@ import {
 } from "vscode";
 
 import { COMMANDS, COLON, SEMICOLON, CURSOR } from "./constants";
-import { getStore, toAlphabetic, getColonData } from "./utils";
+import { getStore, toAlphabetic, getColonData, longEnough } from "./utils";
 import { UsageMap, Comporator, ItemBuilder } from "./types";
 
 export const getTemplate = (property: string, lineText: string): string => {
@@ -67,7 +67,7 @@ export const getItems = (
   const usageMap = getStore(context);
 
   return allCssProps
-    .filter((prop) => prop.startsWith(prefix) && prop.length > 1) // TODO: deside to use fuzzy search here
+    .filter((prop) => prop.startsWith(prefix) && longEnough(prop)) // TODO: deside to use fuzzy search here
     .sort(getComporator(usageMap))
     .map(getItemBuilder(usageMap, lineText));
 };
