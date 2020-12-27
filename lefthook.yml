@@ -1,7 +1,7 @@
 commit-msg:
   commands:
     lint:
-      run: commitlint -e .git/COMMIT_EDITMSG
+      run: ./node_modules/.bin/commitlint -e .git/COMMIT_EDITMSG
 
 pre-commit:
   commands:

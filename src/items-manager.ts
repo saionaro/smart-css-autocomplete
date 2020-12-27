@@ -67,7 +67,7 @@ export const getItems = (
   const usageMap = getStore(context);
 
   return allCssProps
-    .filter((prop) => prop.startsWith(prefix)) // TODO: deside to use fuzzy search here
+    .filter((prop) => prop.startsWith(prefix) && prop.length > 1) // TODO: deside to use fuzzy search here
     .sort(getComporator(usageMap))
     .map(getItemBuilder(usageMap, lineText));
 };
