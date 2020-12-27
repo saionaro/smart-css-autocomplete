@@ -3,7 +3,7 @@
   "displayName": "Smart CSS Autocomplete",
   "description": "Autocomplete CSS properties smarter - using an usage statistics instead of standard random",
   "license": "MIT",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "categories": [
     "Programming Languages"
   ],
