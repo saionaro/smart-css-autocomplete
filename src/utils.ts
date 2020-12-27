@@ -3,7 +3,7 @@ import { ExtensionContext } from "vscode";
 import { STORAGE_KEYS, FIRST_LETTER, COLON, SEMICOLON } from "./constants";
 import { UsageMap, IColonData } from "./types";
 
-export const toAlphabetic = (num: number): string => FIRST_LETTER.repeat(num); // TODO: replace with a little smarter approach
+export const toAlphabetic = (num: number): string => FIRST_LETTER.repeat(num); // TODO: replace with a way smarter approach
 
 export const getStore = (
   context: ExtensionContext,
