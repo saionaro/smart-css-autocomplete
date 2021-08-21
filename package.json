@@ -38,6 +38,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -b",
+    "update-css-props": "node scripts/update-props-base.js",
     "typecheck": "tsc --noEmit",
     "watch": "tsc -b -w",
     "lint": "eslint --ext .ts src",
@@ -47,13 +48,14 @@
     "dev-test": "jest --watch"
   },
   "dependencies": {
-    "known-css-properties": "^0.23.0"
+    "fuzzy-search": "^3.2.1"
   },
   "devDependencies": {
     "@arkweid/lefthook": "^0.7.2",
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@semantic-release/git": "^9.0.0",
+    "@types/fuzzy-search": "^2.1.1",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.1",
     "@types/vscode": "^1.43.0",

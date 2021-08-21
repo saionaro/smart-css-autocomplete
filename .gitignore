@@ -1,3 +1,4 @@
 out
 node_modules
+scripts/raw-data.json
 .vscode-test
