@@ -58,7 +58,7 @@ export const getItemBuilder =
     item.detail = "";
 
     if (usageCount || DEBUG) {
-      item.detail += `Usage: ${usageCount} times`;
+      item.detail += `Used ${usageCount} times`;
       if (DEBUG) {
         item.detail += ` [Source: ${property.kind}]`;
         item.detail += ` [Priority: ${-priorityMap[property.value]}]`;
