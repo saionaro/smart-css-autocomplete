@@ -44,7 +44,7 @@ export const getComporator =
   };
 
 export const getItemBuilder =
-  (usageMap: UsageMap, prefix: string, lineText: string): ItemBuilder =>
+  (usageMap: UsageMap, lineText: string): ItemBuilder =>
   (property, index) => {
     const item = new CompletionItem(property.value, CompletionItemKind.Field);
     const usageCount = usageMap[property.value] ?? 0;
@@ -58,10 +58,10 @@ export const getItemBuilder =
     item.detail = "";
 
     if (usageCount || DEBUG) {
-      item.detail += `Usage: ${usageCount} times]` + prefix;
+      item.detail += `Usage: ${usageCount} times`;
       if (DEBUG) {
-        item.detail += `\n[Source: ${property.kind}]`;
-        item.detail += `\n[Priority: ${-priorityMap[property.value]}]`;
+        item.detail += ` [Source: ${property.kind}]`;
+        item.detail += ` [Priority: ${-priorityMap[property.value]}]`;
       }
     }
 
@@ -83,22 +83,24 @@ export const getItems = (
 
   const usageMap = getStore(context);
   const result: Item[] = [];
+  const addedMap = new Map<string, 1>();
 
   if (prefix.length >= 1) {
-    for (let i = 0; i < allCssProps.length; i++) {
-      const prop = allCssProps[i];
-
-      if (prop.startsWith(prefix) && longEnough(prop)) {
-        result.push({ value: prop, kind: ItemKind.PREFIX });
+    for (const value of allCssProps) {
+      if (value.startsWith(prefix) && longEnough(value)) {
+        result.push({ value, kind: ItemKind.PREFIX });
+        addedMap.set(value, 1);
       }
     }
 
     if (prefix.length >= 2) {
       const abbrItems = abbrIndex.getItem(prefix.split(""));
 
-      for (let i = 0; i < abbrItems.length; i++) {
-        const prop = abbrItems[i];
-        result.push({ value: prop, kind: ItemKind.ABBR });
+      for (const value of abbrItems) {
+        if (addedMap.has(value)) continue;
+
+        result.push({ value, kind: ItemKind.ABBR });
+        addedMap.set(value, 1);
       }
     }
   }
@@ -106,15 +108,15 @@ export const getItems = (
   if (prefix.length > 2 && result.length < 5) {
     const fuzzyItems = searcher.search(prefix);
 
-    for (let i = 0; i < fuzzyItems.length; i++) {
-      const prop = fuzzyItems[i];
-      if (longEnough(prop)) {
-        result.push({ value: prop, kind: ItemKind.FUZZY });
+    for (const value of fuzzyItems) {
+      if (longEnough(value) && !addedMap.has(value)) {
+        result.push({ value, kind: ItemKind.FUZZY });
+        addedMap.set(value, 1);
       }
     }
   }
 
-  return [...new Set(result)]
+  return result
     .sort(getComporator(usageMap))
-    .map(getItemBuilder(usageMap, prefix, lineText));
+    .map(getItemBuilder(usageMap, lineText));
 };
