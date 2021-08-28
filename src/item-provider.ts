@@ -6,7 +6,7 @@ import {
   ExtensionContext,
 } from "vscode";
 
-import { SELECTOR } from "./constants";
+import { SELECTOR, ALPHABET } from "./constants";
 import { getItems } from "./items-manager";
 
 let context: ExtensionContext;
@@ -18,12 +18,17 @@ const providerFunction: CompletionItemProvider = {
     const lineText = document.getText(range);
     const prefix = lineText.slice(0, position.character);
 
-    return getItems(context, prefix.trim(), lineText.trim());
+    return getItems(context, prefix.trim().toLowerCase(), lineText.trim());
   },
 };
 
 export const registerProvider = (ctx: ExtensionContext): void => {
   context = ctx;
-
-  languages.registerCompletionItemProvider(SELECTOR, providerFunction);
+  ctx.subscriptions.push(
+    languages.registerCompletionItemProvider(
+      SELECTOR,
+      providerFunction,
+      ...ALPHABET
+    )
+  );
 };

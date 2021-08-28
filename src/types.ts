@@ -7,6 +7,21 @@ export interface IColonData {
 
 export type UsageMap = Record<string, number>;
 
-export type Comporator = (a: string, b: string) => number;
+export enum ItemKind {
+  PREFIX = "prefix",
+  FUZZY = "fuzzy",
+  ABBR = "abbr",
+}
+export interface Item {
+  value: string;
+  kind: ItemKind;
+}
 
-export type ItemBuilder = (property: string, num: number) => CompletionItem;
+export type Comporator = (a: Item, b: Item) => number;
+
+export type ItemBuilder = (property: Item, num: number) => CompletionItem;
+
+export type Node = {
+  children: Record<string, Node>;
+  vals: string[];
+};

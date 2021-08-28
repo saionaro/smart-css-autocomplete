@@ -1,7 +1,5 @@
 export const TITLE = "vs-smart-css-autocomplete";
-
 export const SCHEME = "file";
-
 export const FILES_GLOB = "**/*.{css,scss,less,sass,styl}";
 
 export const SELECTOR = {
@@ -21,9 +19,9 @@ export const COMMANDS = {
 };
 
 export const FIRST_LETTER = "a";
-
 export const COLON = ":";
-
 export const SEMICOLON = ";";
-
 export const CURSOR = "$0";
+export const ALPHABET = "abcdefghijklmnopqrstuvwxyz-";
+export const PROPS_SEPARATOR = "-";
+export const DEBUG = false;

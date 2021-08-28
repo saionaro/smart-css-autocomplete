@@ -24,6 +24,6 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "types"],
+  "include": ["src"],
   "exclude": ["node_modules", "src/__tests__"]
 }
