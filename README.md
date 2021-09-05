@@ -1,15 +1,23 @@
 # Smart CSS Autocomplete ![CI](https://github.com/Saionaro/smart-css-autocomplete/workflows/CI/badge.svg)
 
-Autocomplements the CSS properties smarter. We collect local statistics on the use of CSS properties for smart sorting hints.
+Autocomplete CSS properties smarter. SCA collects local CSS properties usage statistic to provide smart sorted hints. In case of not enough individual static it uses [global usage statistic](https://www.chromestatus.com/metrics/css/popularity) to suggest you best options.
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/Saionaro/smart-css-autocomplete/master/images/example.png" alt="Usage Example" />
 </div>
 
-## Attention
+## Hints
 
 For better experience we strongly suggest to switch VS Code parameter `Text Editor` - `Suggest Selection` to `first` option.
 In that case SCA will preselect the most used CSS property automatically.
+
+You also can try to disable standard props autocomplete
+```
+"[css]": {"editor.suggest.showProperties": false},
+"[less]": {"editor.suggest.showProperties": false},
+"[sass]": {"editor.suggest.showProperties": false},
+"[scss]": {"editor.suggest.showProperties": false},
+```
 
 ## Installation
 
