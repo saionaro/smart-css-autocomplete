@@ -45,7 +45,7 @@
     "format": "prettier --write",
     "release": "semantic-release",
     "test": "jest",
-    "dev-test": "jest --watch"
+    "test-dev": "jest --watch"
   },
   "dependencies": {
     "fuzzy-search": "^3.2.1"

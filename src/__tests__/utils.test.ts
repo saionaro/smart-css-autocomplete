@@ -1,5 +1,4 @@
-import { toAlphabetic, getColonData } from "../utils";
-import { AbbrIndex } from "../abbr-index";
+import { toAlphabetic, getColonData, lookupWord } from "../utils";
 
 describe("utils", () => {
   describe("toAlphabetic", () => {
@@ -16,63 +15,86 @@ describe("utils", () => {
     });
   });
 
+  const getParts = (row: string): [string, string] =>
+    row.split("|") as [string, string];
+
   describe("getColonData", () => {
     it("normal prefix", () => {
-      expect(getColonData("margin")).toEqual({
+      expect(getColonData(...getParts("margin|"))).toEqual({
         colon: false,
         semicolon: false,
       });
     });
 
     it("prefix plus colon", () => {
-      expect(getColonData("margin:")).toEqual({
+      expect(getColonData(...getParts("margin|:"))).toEqual({
         colon: true,
         semicolon: false,
       });
     });
 
     it("prefix plus colon and semicolon", () => {
-      expect(getColonData("margin: ;")).toEqual({
+      expect(getColonData(...getParts("margin|:;"))).toEqual({
         colon: true,
         semicolon: true,
       });
     });
 
     it("empty", () => {
-      expect(getColonData("")).toEqual({
+      expect(getColonData(...getParts("|"))).toEqual({
         colon: false,
         semicolon: false,
       });
     });
 
     it("just a semicolon", () => {
-      expect(getColonData(";")).toEqual({
+      expect(getColonData(...getParts("|;"))).toEqual({
         colon: false,
         semicolon: true,
       });
     });
 
     it("semicolon and colon", () => {
-      expect(getColonData(":;")).toEqual({
+      expect(getColonData(...getParts("|:;"))).toEqual({
+        colon: true,
+        semicolon: true,
+      });
+    });
+
+    it("don't count semicolon in next prop", () => {
+      expect(getColonData(...getParts("mar| padding: 12px;"))).toEqual({
+        colon: false,
+        semicolon: false,
+      });
+    });
+
+    it("count colon and semicolon in current prop", () => {
+      expect(getColonData(...getParts("mar|padding: 12px;"))).toEqual({
         colon: true,
         semicolon: true,
       });
     });
   });
 
-  describe("AbbrIndex", () => {
+  describe("lookupWord", () => {
     it("normal usage", () => {
-      const index = new AbbrIndex([
-        "margin",
-        "border-radius",
-        "margin-top",
-        "margin-bottom",
-      ]);
-      expect(index.getItem(["b", "r"])).toEqual(["border-radius"]);
-      expect(index.getItem(["m", "t"])).toEqual(["margin-top"]);
-      expect(index.getItem(["m", "b"])).toEqual(["margin-bottom"]);
-      expect(index.getItem(["m", "b", "w"])).toEqual([]);
-      expect(index.getItem(["m"])).toEqual([]);
+      expect(lookupWord("word")).toEqual("word");
+    });
+
+    it("semicolon", () => {
+      expect(lookupWord("wwef;word")).toEqual("word");
+    });
+
+    it("whitespace", () => {
+      expect(lookupWord("wwef word")).toEqual("word");
+    });
+
+    it("bracket open", () => {
+      expect(lookupWord("{ word")).toEqual("word");
+    });
+
+    it("bracket close", () => {
+      expect(lookupWord("} word")).toEqual("word");
     });
   });
 });

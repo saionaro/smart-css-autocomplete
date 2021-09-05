@@ -8,7 +8,13 @@ import {
 import allCssProps from "./css-props.json";
 
 import { COMMANDS, COLON, SEMICOLON, CURSOR, DEBUG } from "./constants";
-import { getStore, toAlphabetic, getColonData, longEnough } from "./utils";
+import {
+  getStore,
+  toAlphabetic,
+  getColonData,
+  longEnough,
+  lookupWord,
+} from "./utils";
 import { AbbrIndex } from "./abbr-index";
 import { UsageMap, Comporator, ItemBuilder, Item, ItemKind } from "./types";
 
@@ -19,8 +25,12 @@ const priorityMap = allCssProps.reduce((acc, prop, index) => {
 const searcher = new FuzzySearch(allCssProps, []);
 const abbrIndex = new AbbrIndex(allCssProps);
 
-export const getTemplate = (property: string, lineText: string): string => {
-  const lineData = getColonData(lineText);
+export const getTemplate = (
+  property: string,
+  prefix: string,
+  suffix: string
+): string => {
+  const lineData = getColonData(prefix, suffix);
   let template = property;
 
   if (!lineData.colon) {
@@ -44,7 +54,7 @@ export const getComporator =
   };
 
 export const getItemBuilder =
-  (usageMap: UsageMap, lineText: string): ItemBuilder =>
+  (usageMap: UsageMap, prefix: string, suffix: string): ItemBuilder =>
   (property, index) => {
     const item = new CompletionItem(property.value, CompletionItemKind.Field);
     const usageCount = usageMap[property.value] ?? 0;
@@ -67,34 +77,38 @@ export const getItemBuilder =
 
     item.filterText = property.value;
     item.sortText = toAlphabetic(index + 1);
-    item.insertText = new SnippetString(getTemplate(property.value, lineText));
+    item.insertText = new SnippetString(
+      getTemplate(property.value, prefix, suffix)
+    );
 
     return item;
   };
 
 export const getItems = (
   context: ExtensionContext,
-  prefix: string,
-  lineText: string
+  lineText: string,
+  position: number
 ): CompletionItem[] => {
-  const prefixData = getColonData(prefix);
+  const prefix = lineText.slice(0, position);
+  const suffix = lineText.slice(position);
+  const word = lookupWord(prefix);
 
-  if (prefixData.colon || prefixData.semicolon || !prefix.length) return [];
+  if (!word) return [];
 
   const usageMap = getStore(context);
   const result: Item[] = [];
   const addedMap = new Map<string, 1>();
 
-  if (prefix.length >= 1) {
+  if (word.length >= 1) {
     for (const value of allCssProps) {
-      if (value.startsWith(prefix) && longEnough(value)) {
+      if (value.startsWith(word) && longEnough(value)) {
         result.push({ value, kind: ItemKind.PREFIX });
         addedMap.set(value, 1);
       }
     }
 
-    if (prefix.length >= 2) {
-      const abbrItems = abbrIndex.getItem(prefix.split(""));
+    if (word.length >= 2) {
+      const abbrItems = abbrIndex.getItem(word.split(""));
 
       for (const value of abbrItems) {
         if (addedMap.has(value)) continue;
@@ -105,8 +119,8 @@ export const getItems = (
     }
   }
 
-  if (prefix.length > 2 && result.length < 5) {
-    const fuzzyItems = searcher.search(prefix);
+  if (word.length > 2 && result.length < 5) {
+    const fuzzyItems = searcher.search(word);
 
     for (const value of fuzzyItems) {
       if (longEnough(value) && !addedMap.has(value)) {
@@ -118,5 +132,5 @@ export const getItems = (
 
   return result
     .sort(getComporator(usageMap))
-    .map(getItemBuilder(usageMap, lineText));
+    .map(getItemBuilder(usageMap, prefix, suffix));
 };
