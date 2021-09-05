@@ -13,4 +13,4 @@ src/
 node_modules/**
 images/**
 .github/**
-!node_modules/known-css-properties/**
+!node_modules/fuzzy-search/**
