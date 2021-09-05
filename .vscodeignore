@@ -7,7 +7,9 @@ jest.config.js
 package-lock.json
 commitlint.config.js
 contributing.md
+.releaserc.js
 lefthook.yml
+scripts/**
 types/**
 src/
 node_modules/**

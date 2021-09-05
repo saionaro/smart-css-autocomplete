@@ -96,5 +96,9 @@ describe("utils", () => {
     it("bracket close", () => {
       expect(lookupWord("} word")).toEqual("word");
     });
+
+    it("tab", () => {
+      expect(lookupWord("	word")).toEqual("word");
+    });
   });
 });
