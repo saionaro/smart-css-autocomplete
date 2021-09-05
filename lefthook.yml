@@ -10,7 +10,7 @@ pre-commit:
       glob: "src/*.{ts}"
       run: npm run lint {staged_files} --fix && git add {staged_files}
 
-    lint:
+    typecheck:
       glob: "src/*.{ts}"
       run: npm run typecheck
 
