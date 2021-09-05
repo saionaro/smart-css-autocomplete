@@ -23,6 +23,7 @@ export const FIRST_LETTER = "a";
 export const COLON = ":";
 export const SEMICOLON = ";";
 export const WHITESPACE = " ";
+export const TAB = "	";
 export const CURSOR = "$0";
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz-";
 export const PROPS_SEPARATOR = "-";
@@ -35,6 +36,7 @@ export const BRACKETS = {
 export const DEBUG = false;
 export const WORD_BREAKS = new Set([
   SEMICOLON,
+  TAB,
   WHITESPACE,
   BRACKETS.CURLY.OPEN,
   BRACKETS.CURLY.CLOSE,
