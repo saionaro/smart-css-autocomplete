@@ -13,17 +13,15 @@ let context: ExtensionContext;
 
 const providerFunction: CompletionItemProvider = {
   provideCompletionItems: (document, position) => {
-    const lineStart = new Position(
-      position.line,
-      Math.max(0, position.character - ITEMS_LOOKUP)
-    );
+    const shift = Math.max(0, position.character - ITEMS_LOOKUP);
+    const lineStart = new Position(position.line, shift);
     const range = new Range(
       lineStart,
       lineStart.translate(0, position.character + ITEMS_LOOKUP)
     );
     const lineText = document.getText(range);
 
-    return getItems(context, lineText, position.character);
+    return getItems(context, lineText, position.character - shift);
   },
 };
 
